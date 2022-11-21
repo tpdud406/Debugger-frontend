@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styled from "styled-components";
 
 import Editor from "../../components/Editor";
@@ -6,9 +7,11 @@ import Variables from "../../components/Variables";
 import Watch from "../../components/Watch";
 
 function Debugging() {
+  const editorRef = useRef(null);
+
   return (
     <Wrapper>
-      <Editor />
+      <Editor ref={editorRef} />
       <SideBar />
       <Bottom>
         <Variables />

@@ -12,7 +12,7 @@ const INIT_VALUE = `function solution(n) {
   //Code...
 }`;
 
-function Editor(ref) {
+function Editor({ getCode }, ref) {
   // const editorRef = useRef();
   const [code, setCode] = useState(INIT_VALUE);
   const editorState = {
@@ -49,12 +49,12 @@ function Editor(ref) {
     ref.current.setOption("readOnly", false);
   };
 
-  useEffect(() => {
-    // if (editorRef) {
-    //   ref.current = editorRef.current;
-    // }
-    ref.current.focus();
-  });
+  // useEffect(() => {
+  //   // if (editorRef) {
+  //   //   ref.current = editorRef.current;
+  //   // }
+  //   ref.current.focus();
+  // });
 
   const gutterHandler = (cm, lineNumber, gutter, event) => {
     const info = cm.lineInfo(lineNumber);
@@ -83,6 +83,7 @@ function Editor(ref) {
         onBeforeChange={(editor, data, value) => {
           setCode(value);
         }}
+        onChange={() => getCode(code)}
         onGutterClick={gutterHandler}
       />
     </Wrapper>

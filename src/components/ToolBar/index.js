@@ -5,23 +5,31 @@ import {
   VscDebugStepInto,
   VscDebugStepOut,
   VscDebugStepOver,
+  VscDebugStop,
 } from "react-icons/vsc";
 import { useContext } from "react";
 import { SocketContext } from "../../context/socket";
 
-function ToolBar() {
+function ToolBar({ getButtonName }) {
   const socket = useContext(SocketContext);
   const emitHandler = (e) => {
     const { name } = e.currentTarget;
 
-    console.log(name);
+    getButtonName(name);
+
     socket.emit(`${name}`, `hi I'm ${name}`);
+    if (name === "start") {
+      socket.emit(`${name}`);
+    }
   };
 
   return (
     <Wrapper>
-      <Button type="button" name="run">
+      <Button type="button" name="start" onClick={emitHandler}>
         <VscDebugStart />
+      </Button>
+      <Button type="button" name="stop" onClick={emitHandler}>
+        <VscDebugStop />
       </Button>
       <Button type="button" name="paused" onClick={emitHandler}>
         <VscDebugPause />

@@ -8,11 +8,24 @@ import "codemirror/addon/edit/matchbrackets";
 import "codemirror/addon/edit/closebrackets";
 import { gutterMarker } from "../../services/gutterMarker";
 
-const INIT_VALUE = `function solution(n) {
-  //Code...
-}`;
+const INIT_VALUE = `function fizzbuzz (n) {
+  for (var i = 1; i < n + 1; i++) {
+     if (i % 3 === 0) {
+        if (i % 5 === 0) {
+           console.log('fizzbuzz');
+        }
+        console.log('fizz');
+     } else if (i % 5 === 0) {
+        console.log('buzz');
+     } else {
+        console.log(i);
+     }
+  }
+}
 
-function Editor(ref) {
+console.log(fizzbuzz(20));`;
+
+function Editor({ getCode }, ref) {
   // const editorRef = useRef();
   const [code, setCode] = useState(INIT_VALUE);
   const editorState = {
@@ -49,12 +62,12 @@ function Editor(ref) {
     ref.current.setOption("readOnly", false);
   };
 
-  useEffect(() => {
-    // if (editorRef) {
-    //   ref.current = editorRef.current;
-    // }
-    ref.current.focus();
-  });
+  // useEffect(() => {
+  //   // if (editorRef) {
+  //   //   ref.current = editorRef.current;
+  //   // }
+  //   ref.current.focus();
+  // });
 
   const gutterHandler = (cm, lineNumber, gutter, event) => {
     const info = cm.lineInfo(lineNumber);
@@ -83,6 +96,7 @@ function Editor(ref) {
         onBeforeChange={(editor, data, value) => {
           setCode(value);
         }}
+        onChange={() => getCode(code)}
         onGutterClick={gutterHandler}
       />
     </Wrapper>

@@ -30,15 +30,12 @@ function Debugging() {
 
   useEffect(() => {
     if (buttonName === "start") {
-      // socket.emit("codeRun", JSON.stringify(code));
-      // socket.on("result", (result) => console.log(result));
-      // if (!document.querySelector("script")) {
-      // const script = document.createElement("script");
-      // // script.async = true;
-      // script.setAttribute("type", "javascript");
-      // script.innerHTML = "console.log(code)";
-      // document.body.appendChild(script);
-      // }
+      const script = document.createElement("script");
+      script.setAttribute("type", "javascript");
+      script.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/react-is/18.2.0/cjs/react-is.development.js";
+      document.body.appendChild(script);
+
       console.log("시작");
       isPlaying.current = true;
       socket.emit("beginDebug", JSON.stringify(code));
@@ -57,14 +54,14 @@ function Debugging() {
       socket.emit("stepOver");
     }
 
-    // if (buttonName === "stop") {
-    //   isPlaying.current = false;
-    //   socket.emit("stopDebug", "stop");
-    //   console.log("stop");
-    // }
+    if (buttonName === "stop") {
+      isPlaying.current = false;
+      socket.emit("stopDebug", "stop");
+      console.log("stop");
+    }
 
-    // setButtonName(null);
-  });
+    setButtonName(null);
+  }, [buttonName]);
 
   useEffect(() => {
     socket.off("Debugger.paused").on("Debugger.paused", (data) => {

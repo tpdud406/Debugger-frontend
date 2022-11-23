@@ -8,9 +8,22 @@ import "codemirror/addon/edit/matchbrackets";
 import "codemirror/addon/edit/closebrackets";
 import { gutterMarker } from "../../services/gutterMarker";
 
-const INIT_VALUE = `function solution(n) {
-  //Code...
-}`;
+const INIT_VALUE = `function fizzbuzz (n) {
+  for (var i = 1; i < n + 1; i++) {
+     if (i % 3 === 0) {
+        if (i % 5 === 0) {
+           console.log('fizzbuzz');
+        }
+        console.log('fizz');
+     } else if (i % 5 === 0) {
+        console.log('buzz');
+     } else {
+        console.log(i);
+     }
+  }
+}
+
+console.log(fizzbuzz(20));`;
 
 function Editor({ getCode }, ref) {
   // const editorRef = useRef();
